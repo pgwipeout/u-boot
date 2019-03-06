@@ -1,7 +1,6 @@
+// SPDX-License-Identifier: GPL-2.0+
 /*
  * (C) Copyright 2016 Rockchip Electronics Co., Ltd
- *
- * SPDX-License-Identifier:     GPL-2.0+
  */
 
 #include <dt-bindings/clock/rk3328-cru.h>
@@ -189,20 +188,11 @@
 	grf: syscon@ff100000 {
 		compatible = "rockchip,rk3328-grf", "syscon", "simple-mfd";
 		reg = <0x0 0xff100000 0x0 0x1000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		io_domains: io-domains {
 			compatible = "rockchip,rk3328-io-voltage-domain";
 			status = "disabled";
 		};
-
-		grf_gpio: grf-gpio {
-			compatible = "rockchip,rk3328-grf-gpio";
-			gpio-controller;
-			#gpio-cells = <2>;
-		};
-
 	};
 
 	uart0: serial@ff110000 {
@@ -347,31 +337,6 @@
 		};
 	};
 
-	efuse: efuse@ff260000 {
-		compatible = "rockchip,rk3328-efuse";
-		reg = <0x0 0xff260000 0x0 0x50>;
-		#address-cells = <1>;
-		#size-cells = <1>;
-		clocks = <&cru SCLK_EFUSE>;
-		clock-names = "pclk_efuse";
-		rockchip,efuse-size = <0x20>;
-
-		/* Data cells */
-		efuse_id: id@7 {
-			reg = <0x07 0x10>;
-		};
-		cpu_leakage: cpu-leakage@17 {
-			reg = <0x17 0x1>;
-		};
-		logic_leakage: logic-leakage@19 {
-			reg = <0x19 0x1>;
-		};
-		efuse_cpu_version: cpu-version@1a {
-			reg = <0x1a 0x1>;
-			bits = <3 3>;
-		};
-	};
-
 	saradc: saradc@ff280000 {
 		compatible = "rockchip,rk3328-saradc", "rockchip,saradc";
 		reg = <0x0 0xff280000 0x0 0x100>;
@@ -384,19 +349,13 @@
 		status = "disabled";
 	};
 
-	dmc: dmc {
+	dmc: dmc@ff400000 {
 		u-boot,dm-pre-reloc;
-		compatible = "rockchip,rk3328-dmc";
-		reg = <0x0 0xff400000 0x0 0x1000
-		       0x0 0xff780000 0x0 0x3000
-		       0x0 0xff100000 0x0 0x1000
-		       0x0 0xff440000 0x0 0x1000
-		       0x0 0xff720000 0x0 0x1000
-		       0x0 0xff798000 0x0 0x1000>;
+		compatible = "rockchip,rk3328-dmc", "syscon";
+		reg = <0x0 0xff400000 0x0 0x1000>;
 	};
 
 	cru: clock-controller@ff440000 {
-		u-boot,dm-pre-reloc;
 		compatible = "rockchip,rk3328-cru", "rockchip,cru", "syscon";
 		reg = <0x0 0xff440000 0x0 0x1000>;
 		rockchip,grf = <&grf>;
@@ -496,17 +455,6 @@
 		};
 	};
 
-	emmc: rksdmmc@ff520000 {
-		compatible = "rockchip,rk3328-dw-mshc", "rockchip,rk3288-dw-mshc";
-		reg = <0x0 0xff520000 0x0 0x4000>;
-		max-frequency = <150000000>;
-		clocks = <&cru HCLK_EMMC>, <&cru SCLK_EMMC>;
-		clock-names = "biu", "ciu";
-		fifo-depth = <0x100>;
-		interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-		status = "disabled";
-	};
-
 	sdmmc: rksdmmc@ff500000 {
 		compatible = "rockchip,rk3328-dw-mshc", "rockchip,rk3288-dw-mshc";
 		reg = <0x0 0xff500000 0x0 0x4000>;
@@ -527,6 +475,17 @@
 		clock-names = "biu", "ciu", "ciu_drv", "ciu_sample";
 		fifo-depth = <0x100>;
 		interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+		status = "disabled";
+	};
+
+	emmc: rksdmmc@ff520000 {
+		compatible = "rockchip,rk3328-dw-mshc", "rockchip,rk3288-dw-mshc";
+		reg = <0x0 0xff520000 0x0 0x4000>;
+		max-frequency = <150000000>;
+		clocks = <&cru HCLK_EMMC>, <&cru SCLK_EMMC>;
+		clock-names = "biu", "ciu";
+		fifo-depth = <0x100>;
+		interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
 		status = "disabled";
 	};
 
@@ -562,8 +521,6 @@
 		compatible = "generic-ohci";
 		reg = <0x0 0xff5d0000 0x0 0x10000>;
 		interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
-		phys = <&u2phy 1>;
-		phy-names = "usb";
 		status = "disabled";
 	};
 
