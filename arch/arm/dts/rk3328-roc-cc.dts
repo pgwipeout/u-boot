@@ -16,14 +16,17 @@
 		stdout-path = &uart2;
 	};
 
-/*	memory {
-		reg = <0x0 0x0 0x1 0x0>;
+	aliases {
+		mmc0 = &sdmmc;
+		mmc1 = &emmc;
+		mmc2 = &sdmmc_ext;
 	};
-*/
+
 	vcc3v3_sdmmc: sdmmc-pwren {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc3v3";
-		gpio = <&gpio0 30 GPIO_ACTIVE_HIGH>;
+		gpio = <&gpio0 30 GPIO_ACTIVE_LOW>;
+		pinctrl-0 = <&sdmmc0m1_gpio>;
 		regulator-always-on;
 		regulator-boot-on;
 	};
@@ -67,10 +70,10 @@
 	cap-sd-highspeed;
 	card-detect-delay = <300>;
 	disable-wp;
-	max-frequency = <50000000>;
-	num-slots = <1>;
+/*	max-frequency = <50000000>;
+*/	num-slots = <1>;
 	pinctrl-names = "default";
-	pinctrl-0 = <&sdmmc0_clk>, <&sdmmc0_cmd>, <&sdmmc0_dectn>, <&sdmmc0_bus4>;
+	pinctrl-0 = <&sdmmc0m1_gpio>, <&sdmmc0_clk>, <&sdmmc0_cmd>, <&sdmmc0_dectn>, <&sdmmc0_bus4>;
 	status = "okay";
 };
 
@@ -87,7 +90,7 @@
 	status = "okay";
 };
 
-&gmac2io {
+/*&gmac2io {
 	assigned-clocks = <&cru SCLK_MAC2IO>, <&cru SCLK_MAC2IO_EXT>;
 	clock_in_out = "input";
 	phy-mode = "rgmii";
@@ -100,8 +103,8 @@
 	rx_delay = <0x11>;
 	status = "okay";
 };
-
-&u2phy {
+*/
+/*&u2phy {
         status = "okay";
 };
 
@@ -112,7 +115,7 @@
 &u2phy_host {
         status = "okay";
 };
-
+*/
 &usb_host0_ehci {
 	status = "okay";
 };
