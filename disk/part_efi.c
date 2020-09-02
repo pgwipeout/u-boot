@@ -320,7 +320,8 @@ static int part_test_efi(struct blk_desc *dev_desc)
 	/* Read legacy MBR from block 0 and validate it */
 	if ((blk_dread(dev_desc, 0, 1, (ulong *)legacymbr) != 1)
 		|| (is_pmbr_valid(legacymbr) != 1)) {
-		return -1;
+//		return -1;
+		return 0;
 	}
 	return 0;
 }
