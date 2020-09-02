@@ -315,14 +315,15 @@ int part_get_info_efi(struct blk_desc *dev_desc, int part,
 
 static int part_test_efi(struct blk_desc *dev_desc)
 {
+#ifndef FORCE_MANUAL_GPT
 	ALLOC_CACHE_ALIGN_BUFFER_PAD(legacy_mbr, legacymbr, 1, dev_desc->blksz);
 
 	/* Read legacy MBR from block 0 and validate it */
 	if ((blk_dread(dev_desc, 0, 1, (ulong *)legacymbr) != 1)
 		|| (is_pmbr_valid(legacymbr) != 1)) {
-//		return -1;
-		return 0;
+		return -1;
 	}
+#endif
 	return 0;
 }
 

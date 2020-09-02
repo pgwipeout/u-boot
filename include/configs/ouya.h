@@ -10,6 +10,9 @@
 
 #include "tegra30-common.h"
 
+#define FORCE_MANUAL_GPT
+#define GPT_PRIMARY_PARTITION_TABLE_LBA 15073279ULL
+
 #define CONFIG_TEGRA_BOARD_STRING	"Ouya Game Console"
 
 #define CONFIG_TEGRA_ENABLE_UARTD
