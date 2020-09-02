@@ -1,0 +1,6 @@
+OUYA BOARD
+M:	Peter Geis <pgwipeout@gmail.com>
+S:	Maintained
+F:	board/nvidia/ouya/
+F:	include/configs/ouya.h
+F:	configs/ouya_defconfig
