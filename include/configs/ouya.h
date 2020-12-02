@@ -22,7 +22,9 @@
 #define CONFIG_PRAM 4096
 
 #define BOARD_EXTRA_ENV_SETTINGS \
-        "reboot_bootloader=mw 7000e450 40000200 ; mw 7000e400 40000210\0" \
+        "reboot_bootloader=mw 7000e450 40000000 ; mw 7000e400 10\0" \
+        "reboot_recovery=mw 7000e450 80000000 ; mw 7000e400 10\0" \
+        "reboot_forced_recovery=mw 7000e450 2 ; mw 7000e400 10\0" \
 	"devnum=0\0"  \
 	"devtype=mmc\0" \
 	"distro_bootpart=3\0" \
