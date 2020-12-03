@@ -329,7 +329,6 @@ static struct pmux_pingrp_config unused_pins_lowpower[] = {
 
 static struct pmux_drvgrp_config cardhu_padctrl[] = {
 	/* (_drvgrp, _slwf, _slwr, _drvup, _drvdn, _lpmd, _schmt, _hsm) */
-	DEFAULT_PADCFG(SDIO1, SDIOCFG_DRVUP_SLWF, SDIOCFG_DRVDN_SLWR, \
-		SDIOCFG_DRVUP, SDIOCFG_DRVDN, NONE, DISABLE, DISABLE),
+	DEFAULT_PADCFG(GMA, 0x3, 0x3, 0x9, 0x9, X8, DISABLE, DISABLE),
 };
 #endif	/* _PINMUX_CONFIG_CARDHU_H_ */

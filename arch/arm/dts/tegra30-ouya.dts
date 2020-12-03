@@ -1,5 +1,6 @@
 /dts-v1/;
 
+#include <dt-bindings/input/input.h>
 #include "tegra30.dtsi"
 
 / {
@@ -150,33 +151,14 @@
 		dr_mode = "otg";
 	};
 
-	usb-phy@7d000000 {
-//		status = "okay";
-	};
-
 	usb@7d004000 {
 		nvidia,vbus-gpio = <&gpio TEGRA_GPIO(DD, 5) GPIO_ACTIVE_HIGH>;
 		status = "okay";
 	};
 
-	usb-phy@7d004000 {
-	//	nvidia,hssync-start-delay = <0>;
-	//	nvidia,xcvr-setup = <15>;
-	//	nvidia,xcvr-hsslew = <8>;
-	//	nvidia,hsdiscon-level = <1>;
-//		status = "okay";
-	};
-
 	usb@7d008000 {
 		nvidia,vbus-gpio = <&gpio TEGRA_GPIO(DD, 4) GPIO_ACTIVE_HIGH>;
 		status = "okay";
-	};
-
-	usb-phy@7d008000 {
-	//	nvidia,xcvr-setup = <8>;
-	//	nvidia,xcvr-hsslew = <8>;
-	//	nvidia,hsdiscon-level = <1>;
-//		status = "okay";
 	};
 
 	clocks {
@@ -189,6 +171,27 @@
 			reg=<0>;
 			#clock-cells = <0>;
 			clock-frequency = <32768>;
+		};
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+
+		power {
+			label = "Power";
+			gpios = <&gpio TEGRA_GPIO(V, 0) GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_POWER>;
+			wakeup-source;
+		};
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		power {
+			label = "power-led";
+			gpios = <&gpio TEGRA_GPIO(H, 2) GPIO_ACTIVE_HIGH>;
+			default-state = "on";
 		};
 	};
 

@@ -1,4 +1,4 @@
-if TARGET_OUYA
+if TARGET_OUYA || TARGET_OUYA_CHAINLOAD
 
 config SYS_BOARD
 	default "ouya"
